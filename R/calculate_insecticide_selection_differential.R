@@ -1,25 +1,14 @@
-calculate_insecticide_selection_differential = function(initial.applied.efficacy,
-                                                        generations.since.deployment,
-                                                        basal.decay.rate,
-                                                        rapid.decay.rate,
-                                                        cut.off.generations,
-                                                        current.resistance.intensity,
+calculate_insecticide_selection_differential = function(current.resistance.intensity,
                                                         sd.population.resistance,
                                                         half.population.bioassay.survival.resistance = 900,
                                                         conversion.factor = 0.48,
                                                         intercept = 0.15,
                                                         female.insecticide.exposure,
-                                                        male.insecticide.exposure){
+                                                        male.insecticide.exposure,
+                                                        current.insecticide.efficacy){
 
   exposure = calculate_insecticide_exposure(female.insecticide.exposure = female.insecticide.exposure,
                                             male.insecticide.exposure = male.insecticide.exposure)
-
-  insecticide.efficacy.now = calculate_current_insecticide_efficacy(initial.applied.efficacy = initial.applied.efficacy,
-                                                                    generations.since.deployment = generations.since.deployment,
-                                                                    basal.decay.rate = basal.decay.rate,
-                                                                    rapid.decay.rate = rapid.decay.rate,
-                                                                    cut.off.generations = cut.off.generations)
-
 
   bioassay.survival.proportion = resistance_to_bioassay_survival(maximum.bioassay.survival.proportion = 1,
                                                                  mean.population.resistance = current.resistance.intensity,
@@ -33,13 +22,9 @@ calculate_insecticide_selection_differential = function(initial.applied.efficacy
   field.survival.proportion = convert_bioassay_survival_to_field(bioassay.survival = bioassay.survival.proportion,
                                                                  conversion.factor = conversion.factor,#values obtained from linear modelling.
                                                                  intercept = intercept,
-                                                                 current.insecticide.efficacy = insecticide.efficacy.now)
+                                                                 current.insecticide.efficacy = current.insecticide.efficacy)
 
-  intensity.exposed.survivors = calculate_resistance_intensity_exposed_survivors(initial.applied.efficacy = initial.applied.efficacy,
-                                                                                 generations.since.deployment = generations.since.deployment,
-                                                                                 basal.decay.rate = basal.decay.rate,
-                                                                                 rapid.decay.rate = rapid.decay.rate,
-                                                                                 cut.off.generations = cut.off.generations,
+  intensity.exposed.survivors = calculate_resistance_intensity_exposed_survivors(current.insecticide.efficacy = current.insecticide.efficacy,
                                                                                  current.resistance.intensity = current.resistance.intensity,
                                                                                  half.population.bioassay.survival.resistance = half.population.bioassay.survival.resistance,
                                                                                  conversion.factor = conversion.factor,

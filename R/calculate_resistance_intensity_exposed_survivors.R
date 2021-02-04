@@ -3,22 +3,11 @@
 
 #implements equation 2e from base model v2
 
-calculate_resistance_intensity_exposed_survivors = function(initial.applied.efficacy,
-                                                            generations.since.deployment,
-                                                            basal.decay.rate,
-                                                            rapid.decay.rate,
-                                                            cut.off.generations,
-                                                            current.resistance.intensity,
+calculate_resistance_intensity_exposed_survivors = function(current.resistance.intensity,
                                                             half.population.bioassay.survival.resistance = 900,
                                                             conversion.factor = 0.48,
-                                                            intercept = 0.15){
-
-  insecticide.efficacy.now = calculate_current_insecticide_efficacy(initial.applied.efficacy = initial.applied.efficacy,
-                                                                    generations.since.deployment = generations.since.deployment,
-                                                                    basal.decay.rate = basal.decay.rate,
-                                                                    rapid.decay.rate = rapid.decay.rate,
-                                                                    cut.off.generations = cut.off.generations)
-
+                                                            intercept = 0.15,
+                                                            current.insecticide.efficacy){
 
   bioassay.survival.proportion = resistance_to_bioassay_survival(maximum.bioassay.survival.proportion = 1,
                                                                  mean.population.resistance = current.resistance.intensity,
@@ -32,7 +21,7 @@ calculate_resistance_intensity_exposed_survivors = function(initial.applied.effi
   field.survival.proportion = convert_bioassay_survival_to_field(bioassay.survival = bioassay.survival.proportion,
                                                                  conversion.factor = conversion.factor,#values obtained from linear modelling.
                                                                  intercept = intercept,
-                                                                 current.insecticide.efficacy = insecticide.efficacy.now)
+                                                                 current.insecticide.efficacy = current.insecticide.efficacy)
 
   insecticide.selection.differential = calculate_selection_differential_insecticide_exposed(sd.population.resistance = sd.population.resistance,
                                                                                             field.survival = field.survival.proportion)
