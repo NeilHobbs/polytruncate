@@ -21,12 +21,12 @@ number_migrating_intervention_to_refugia = function(dispersal.rate,
                                                                  intercept = intercept,
                                                                  current.insecticide.efficacy = current.insecticide.efficacy)
 
-  exposure = calculate_insecticide_exposure(female.insecticide.expsure = female.insecticide.expsure,
+  exposure = calculate_insecticide_exposure(female.insecticide.exposure = female.insecticide.exposure,
                                             male.insecticide.exposure = male.insecticide.exposure)
 
   impact.of.intervention = (1 - exposure) + (exposure*field.survival.proportion)
 
   number.of.mosquitoes = dispersal.rate * intervention.coverage * impact.of.intervention
 
-return(numnumber.of.mosquitoes)
+return(number.of.mosquitoes)
 }

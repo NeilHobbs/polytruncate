@@ -10,18 +10,8 @@ perform_intervention_tracking_insecticide_absent = function(dispersal.rate,
                                                              current.insecticide.efficacy,
                                                              insecticide.scaling.factor,
                                                              half.population.bioassay.survival.resistance,
-                                                             initial.applied.efficacy,
-                                                             generations.since.deployment,
-                                                             basal.decay.rate,
-                                                             rapid.decay.rate,
-                                                             cut.off.generations){
-
-  #Obtain the current efficacy of the insecticide in deployment
-  efficacy.of.insecticide = calculate_current_insecticide_efficacy(initial.applied.efficacy =initial.applied.efficacy,
-                                                                   generations.since.deployment = generations.since.deployment,
-                                                                   basal.decay.rate = basal.decay.rate,
-                                                                   rapid.decay.rate = rapid.decay.rate,
-                                                                   cut.off.generations = cut.off.generations)
+                                                            relative.fitness,
+                                                            heritability){
 
   #Calculate the selection differentials:
   refugia.fitness.differential = calculate_fitness_selection_differential(sd.population.resistance = sd.population.resistance,
@@ -38,12 +28,12 @@ perform_intervention_tracking_insecticide_absent = function(dispersal.rate,
                                                           heritability = heritability)
 
   #Update the intensities after insecticide and fitness selection and response has occurred
-  refugia.post.selection = track_resistance_no_insecticide_response(current.resistance.intensity,
-                                                                    fitness.selection)
+  refugia.post.selection = track_resistance_no_insecticide_response(current.resistance.intensity = current.refugia.intensity,
+                                                                    fitness.response = refugia.response)
 
 
-  intervention.post.selection = track_resistance_insecticide_response(current.resistance.intensity = ,
-                                                                      response.to.selection = intervention.response)
+  intervention.post.selection = track_resistance_no_insecticide_response(current.resistance.intensity = current.intervention.intensity,
+                                                                      fitness.response = intervention.response)
 
   #Calculate the Relative Numbers to Disperse
   mosquitoes.leaving.refugia = number_migrating_refugia_to_intervention(intervention.coverage = intervention.coverage,
@@ -57,7 +47,7 @@ perform_intervention_tracking_insecticide_absent = function(dispersal.rate,
                                                                              sd.population.resistance = sd.population.resistance,
                                                                              conversion.factor = conversion.factor,
                                                                              intercept = intercept,
-                                                                             current.insecticide.efficacy = efficacy.of.insecticide)
+                                                                             current.insecticide.efficacy = current.insecticide.efficacy)
 
   #Then perform the mosquito dispersal
   next.generation.intensity = track_intervention_site_after_migration(number.intervention.to.refugia = mosquitoes.leaving.intervention,
