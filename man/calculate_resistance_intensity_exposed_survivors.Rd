@@ -6,15 +6,12 @@
 \title{}
 \usage{
 calculate_resistance_intensity_exposed_survivors(
-  initial.applied.efficacy,
-  generations.since.deployment,
-  basal.decay.rate,
-  rapid.decay.rate,
-  cut.off.generations,
   current.resistance.intensity,
   half.population.bioassay.survival.resistance = 900,
   conversion.factor = 0.48,
-  intercept = 0.15
+  intercept = 0.15,
+  current.insecticide.efficacy,
+  sd.population.resistance
 )
 }
 \description{

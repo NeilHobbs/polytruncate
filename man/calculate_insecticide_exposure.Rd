@@ -10,7 +10,12 @@ calculate_insecticide_exposure(
 )
 }
 \arguments{
-\item{male.insecticide.exposure}{}
+\item{female.insecticide.exposure}{= The proportion of female mosquitoes exposed to the insecticide}
+
+\item{male.insecticide.exposure}{= The proportion of male mosquitoes exposed to the insecticide as a proportion of the female}
+}
+\value{
+The overall proportion of mosquitoes exposed.
 }
 \description{
 Calculate the exposure to the insecticide in the intervention site.

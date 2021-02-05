@@ -27,7 +27,7 @@ calculate_half_population_survival(
 
 \item{estimate.precision}{How precise your estimate of insecticide restistance intensity should be. Recommend values between 0.01 to 0.001}
 
-\item{sd.population.resistance}{How much variation in the population resistance. Recommend setting as zero for scale setting}
+\item{sd.population.resistance}{= The standard deviation of the resistance intensity values in the mosquito population}
 
 \item{estimate.accuracy}{Number of replications of the rnorm function. Recommended value = 1000 for a reliable mean value.}
 

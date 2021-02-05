@@ -17,23 +17,23 @@ bioassay_survival_to_resistance(
 )
 }
 \arguments{
-\item{maximum.bioassay.survival.proportion}{Should be set as 1.}
+\item{maximum.bioassay.survival.proportion}{=  Should be set as 1.}
 
-\item{michaelis.menten.slope}{Should be set as 1}
+\item{michaelis.menten.slope}{= Should be set as 1}
 
-\item{half.population.bioassay.survival.resistance}{This is calculated using the calculate_half_population_resistance function}
+\item{half.population.bioassay.survival.resistance}{= The resistance intensity that would give 50\% survival in the bioassay.}
 
-\item{bioassay.survival}{The survival that occured in the bioassay, as a proportion(values must be between 0 and 1). Where 1=all survived, 0=all died}
+\item{bioassay.survival}{= The survival that occured in the bioassay, as a proportion(values must be between 0 and 1). Where 1=all survived, 0=all died}
 
-\item{estimate.precision}{How precise your estimate of insecticide restistance intensity should be. Recommend values between 0.01 to 0.001}
+\item{estimate.precision}{=  How precise your estimate of insecticide restistance intensity should be. Recommend values between 0.01 to 0.001}
 
-\item{sd.population.resistance}{How much variation in the population resistance.}
+\item{sd.population.resistance}{= The standard deviation of the resistance intensity values in the mosquito population}
 
-\item{minimum.resistance.value}{Recommend setting as 0.}
+\item{number.bioassays}{= How many bioassays are being conducted to estimate the mean survival proportion.}
 
-\item{maximum.resistance.value}{This will depend on the half survival scale, but 10000 would be a good start.}
+\item{minimum.resistance.value}{= Recommend setting to 0. Must be lower than half survival resistance.}
 
-\item{nsim}{How many replications of the rnorm function are conducted. Recommended value is 1000.}
+\item{maximum.resistance.value}{= Depends on your scale. Recommend setting arbitrarily high (10000). Must be higher than half resistance survival}
 }
 \value{
 test.population.resistance This is the mean insecticide resistance intensity of the population to the respected insecticide.

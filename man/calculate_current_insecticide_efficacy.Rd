@@ -12,6 +12,17 @@ calculate_current_insecticide_efficacy(
   cut.off.generations
 )
 }
+\arguments{
+\item{initial.applied.efficacy}{= The efficacy of the initial application of the insecticide dose.}
+
+\item{generations.since.deployment}{= The number of generations the insecticide dose has been in deployment}
+
+\item{basal.decay.rate}{= The base decay rate of the insecticide}
+
+\item{rapid.decay.rate}{= The rate of insecticide decay when the cut off threshold has been exceeded}
+
+\item{cut.off.generations}{= The number of generations until the decay rate changes.}
+}
 \description{
 
 }

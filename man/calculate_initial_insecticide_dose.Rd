@@ -6,6 +6,11 @@
 \usage{
 calculate_initial_insecticide_dose(applied.dose, recommended.dose)
 }
+\arguments{
+\item{applied.dose}{= The efficacy of the applied insecticide dose.}
+
+\item{recommended.dose}{= The recommended efficacy of insecticide dose. Should normally be set at 1.}
+}
 \description{
 Calculate the Relative Dose of the Initial Application
 }
