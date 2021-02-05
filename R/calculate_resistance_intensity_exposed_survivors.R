@@ -7,12 +7,13 @@ calculate_resistance_intensity_exposed_survivors = function(current.resistance.i
                                                             half.population.bioassay.survival.resistance = 900,
                                                             conversion.factor = 0.48,
                                                             intercept = 0.15,
-                                                            current.insecticide.efficacy){
+                                                            current.insecticide.efficacy,
+                                                            sd.population.resistance){
 
   bioassay.survival.proportion = resistance_to_bioassay_survival(maximum.bioassay.survival.proportion = 1,
                                                                  mean.population.resistance = current.resistance.intensity,
                                                                  michaelis.menten.slope = 1,
-                                                                 half.population.bioassay.survival.resistance = 900,
+                                                                 half.population.bioassay.survival.resistance = half.population.bioassay.survival.resistance,
                                                                  sd.population.resistance = sd.population.resistance,
                                                                  number.bioassays = 10000 #set high so as to calculate the true mean.
   )
