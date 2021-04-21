@@ -1,2 +1,2 @@
 # polyresirm
-Quantatative Genetic Modelling for Polygenic Insecticide Resistance
+Quantatative Genetic Modelling for Polygenic Insecticide Resistance: Truncated Selection
