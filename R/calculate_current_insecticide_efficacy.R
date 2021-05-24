@@ -1,58 +1,35 @@
-#' @title Calculate the current efficacy of the insecticide in deployment.
+#' @title Calculate the current insecticidal killing efficacy against a fully susceptible mosquito.
 #'
-#' @description
-#'
-#' @param initial.applied.efficacy = The efficacy of the initial application of the insecticide dose.
-#' @param generations.since.deployment = The number of generations the insecticide dose has been in deployment
-#' @param basal.decay.rate = The base decay rate of the insecticide
-#' @param rapid.decay.rate = The rate of insecticide decay when the cut off threshold has been exceeded
-#' @param cut.off.generations = The number of generations until the decay rate changes.
-
-calculate_current_insecticide_efficacy = function(initial.applied.efficacy,
-                                                  generations.since.deployment,
-                                                  basal.decay.rate,
-                                                  rapid.decay.rate,
-                                                  cut.off.generations){
+#' @param generations.since.deployment = the time in generations since the insecticide was last deployed.
+#' @param threshold.generations = the time (in generations) after which there is a change in the insecticide effective dosage decay rate; which can be due to nets becoming worn to the point mosquitoes are able to avoid the insecticide.
+#' @param initial.insecticide.efficacy = The efficacy of the applied insecticide concentration of the insecticide against a fully susceptible mosquito
+#' @param base.efficacy.decay.rate = The efficacy decay rate during the first generations during which there is expected to be a slow decay in insecticidal efficacy
+#' @param rapid.decay.rate = Decay rate of insecticidal efficacy decay after the threshold.generations is exceeded, where the insecticidal product is expected to undergo a rapid change in efficacy.
 
 
-  generations.after.cutoff = generations.since.deployment - cut.off.generations
+calculate_current_insecticide_efficacy = function(generations.since.deployment,
+                                                  threshold.generations,
+                                                  initial.insecticide.efficacy,
+                                                  base.efficacy.decay.rate,
+                                                  rapid.decay.rate){
 
-    #Equation from Yakob, Dunning, Yan 2010.
-        #Modified to allow for decay to speed up after a set time frame.
-  #perhaps worth having slow decay for first X generations then rapid after that.
-  #Rationale: Public Health Insecticides are designed to maintain a high efficacy then rapidly decay.
+  if(generations.since.deployment <= threshold.generations){
 
-  if(generations.since.deployment <= cut.off.generations){
-  current.efficacy = initial.applied.efficacy * exp(-((generations.since.deployment^2) * basal.decay.rate))
-  }else{
-    pre.cut.off = initial.applied.efficacy * exp(-((generations.since.deployment^2) * basal.decay.rate))
+    current.insecticide.efficacy = initial.insecticide.efficacy * exp(-generations.since.deployment * base.efficacy.decay.rate)
+  }
 
-    current.efficacy = pre.cut.off * exp(-((generations.after.cutoff^2) * rapid.decay.rate))
+  if(threshold.generations < generations.since.deployment){
+
+   first.decay =  initial.insecticide.efficacy * exp(-threshold.generations * base.efficacy.decay.rate)
+
+   current.insecticide.efficacy = first.decay * exp(-(generations.since.deployment-threshold.generations)^2 * rapid.decay.rate)
 
   }
-  #Then rapid decay thereafter:
-
-
-  return(current.efficacy)
-
+  return(current.insecticide.efficacy)
 }
 
-##Test it works
-# time.vec = seq(0, 9, by = 1)
-#
-# efficacy = c()
-# for(i in 1:length(time.vec))(
-#
-#   efficacy[i] = calculate_current_insecticide_efficacy(initial.applied.efficacy = 1,
-#                                                generations.since.deployment = time.vec[i],
-#                                                basal.decay.rate = 0.01,
-#                                                rapid.decay.rate = 0.2,
-#                                                cut.off.generations = 5)
-#
-# )
-#
-# plot(x=time.vec, y = efficacy)
-#
-# min(efficacy)
+
+
+
 
 
