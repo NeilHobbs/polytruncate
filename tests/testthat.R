@@ -1,4 +1,4 @@
 library(testthat)
-library(polyresirm)
+library(polytruncate)
 
-test_check("polyresirm")
+test_check("polytruncate")
