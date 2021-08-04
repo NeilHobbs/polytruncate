@@ -12,19 +12,22 @@ calculate_current_insecticide_efficacy = function(generations.since.deployment,
                                                   initial.insecticide.efficacy,
                                                   base.efficacy.decay.rate,
                                                   rapid.decay.rate){
+  current.insecticide.efficacy = ifelse(generations.since.deployment <= threshold.generations,
+                                        yes = initial.insecticide.efficacy * exp(-generations.since.deployment * base.efficacy.decay.rate),
+                                        no = (initial.insecticide.efficacy * exp(-threshold.generations * base.efficacy.decay.rate))*exp((-(generations.since.deployment-threshold.generations)^2) * rapid.decay.rate))
 
-  if(generations.since.deployment <= threshold.generations){
-
-    current.insecticide.efficacy = initial.insecticide.efficacy * exp(-generations.since.deployment * base.efficacy.decay.rate)
-  }
-
-  if(threshold.generations < generations.since.deployment){
-
-   first.decay =  initial.insecticide.efficacy * exp(-threshold.generations * base.efficacy.decay.rate)
-
-   current.insecticide.efficacy = first.decay * exp(-(generations.since.deployment-threshold.generations)^2 * rapid.decay.rate)
-
-  }
+  # if(generations.since.deployment <= threshold.generations){
+  #
+  #   current.insecticide.efficacy = initial.insecticide.efficacy * exp(-generations.since.deployment * base.efficacy.decay.rate)
+  # }
+  #
+  # if(threshold.generations < generations.since.deployment){
+  #
+  #  first.decay =  initial.insecticide.efficacy * exp(-threshold.generations * base.efficacy.decay.rate)
+  #
+  #  current.insecticide.efficacy = first.decay * exp(-(generations.since.deployment-threshold.generations)^2 * rapid.decay.rate)
+  #
+  # }
   return(current.insecticide.efficacy)
 }
 
