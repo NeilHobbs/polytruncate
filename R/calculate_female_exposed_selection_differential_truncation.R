@@ -11,6 +11,12 @@ calculate_female_exposed_selection_differential_truncation = function(field.surv
 
   female.exposed.selection.differential  = standard.deviation * (dnorm(qnorm(1-field.survival))/field.survival)
 
+
+  #if NA (therefore all die) set to zero
+  female.exposed.selection.differential = ifelse(is.na(female.exposed.selection.differential),
+                                                 yes = 0,
+                                                 no = female.exposed.selection.differential)
+
   return(female.exposed.selection.differential)
 
 }
