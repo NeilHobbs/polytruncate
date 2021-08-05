@@ -14,7 +14,6 @@ calculate_female_trait_mean_after_selection_truncation = function(female.populat
                                                                   female.population.size.after.selection){
 
 
-
   female.trait.mean.after.selection = ((female.population.size.exposed.survivors*female.trait.mean.exposed.survivors)+
      (female.population.size.unexposed*female.trait.mean))/female.population.size.after.selection
 
