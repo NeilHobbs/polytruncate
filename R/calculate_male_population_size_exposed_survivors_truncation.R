@@ -11,7 +11,7 @@ calculate_male_population_size_exposed_survivors_truncation = function(male.inse
                                                                          total.male.population.size,
                                                                          field.survival){
 
-  male.population.size.exposed.survivors = male.insecticide.exposure * female.insecticide.exposure * total.male.population.size * field.survival
+  male.population.size.exposed.survivors = (male.insecticide.exposure * female.insecticide.exposure) * total.male.population.size * field.survival
 
   return(male.population.size.exposed.survivors)
 }
