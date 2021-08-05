@@ -11,6 +11,12 @@ calculate_male_exposed_selection_differential_truncation = function(field.surviv
 
   male.exposed.selection.differential  = standard.deviation * (dnorm(qnorm(1-field.survival))/field.survival)
 
+
+  #if absolutely all the males die there would be no selection differential too.
+  male.exposed.selection.differential = ifelse(is.na(male.exposed.selection.differential),
+                                               yes = 0,
+                                               no = male.exposed.selection.differential)
+
   return(male.exposed.selection.differential)
 
 }
