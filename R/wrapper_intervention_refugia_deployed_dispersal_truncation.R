@@ -63,16 +63,16 @@ wrapper_intervention_refugia_deployed_dispersal_truncation = function(insecticid
                                                               female.fitness.cost = female.fitness.cost,
                                                               male.fitness.cost = male.fitness.cost)
 
-  staying.in.intervention = 1 - number_migrating_intervention_to_refugia(dispersal.rate = dispersal.rate,
+  staying.in.intervention = number_migrating_intervention_to_refugia(dispersal.rate = 1 - dispersal.rate,
                                                                          intervention.coverage = intervention.coverage)
 
-  joining.from.intervetion = number_migrating_intervention_to_refugia(dispersal.rate = dispersal.rate,
+  joining.from.intervention = number_migrating_intervention_to_refugia(dispersal.rate = dispersal.rate,
                                                                       intervention.coverage = intervention.coverage)
 
   joining.from.refugia =  number_migrating_refugia_to_intervention(dispersal.rate = dispersal.rate,
                                                                    intervention.coverage = intervention.coverage)
 
-  staying.in.refugia = 1 - number_migrating_refugia_to_intervention(dispersal.rate = dispersal.rate,
+  staying.in.refugia = number_migrating_refugia_to_intervention(dispersal.rate = 1 - dispersal.rate,
                                                                     intervention.coverage = intervention.coverage)
 
 
@@ -84,7 +84,7 @@ wrapper_intervention_refugia_deployed_dispersal_truncation = function(insecticid
 
 
   refugia.after.migration = refugia_after_migration(intervention.after.selection = intervention.after.selection,
-                                                    joining.from.intervetion = joining.from.intervetion,
+                                                    joining.from.intervention = joining.from.intervention,
                                                     insecticide.population.suppression = insecticide.population.suppression,
                                                     refugia.after.selection = refugia.after.selection,
                                                     staying.in.refugia = staying.in.refugia)
