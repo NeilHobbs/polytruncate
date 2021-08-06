@@ -14,9 +14,9 @@ intervention_after_migration = function(intervention.after.selection,
 
 
   numerator = (intervention.after.selection*staying.in.intervention*(1-insecticide.population.suppression)) + (joining.from.refugia*refugia.after.selection)
-  #denominator =  joining.from.refugia + (staying.in.intervention*(1-insecticide.population.suppression))
+  denominator =  joining.from.refugia + (staying.in.intervention*(1-insecticide.population.suppression))
 
-intervention.after.migration = numerator#/denominator
+intervention.after.migration = numerator/denominator
 
 intervention.after.migration = ifelse(is.na(intervention.after.migration),
                                       yes = 0,
