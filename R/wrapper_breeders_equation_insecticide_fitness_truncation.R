@@ -66,5 +66,10 @@ wrapper_breeders_equation_insecticide_fitness_truncation = function(vector.lengt
                                                                                     male.insecticide.fitness.selection.differential = male.insecticide.fitness.selection.differential,
                                                                                     female.insecticide.fitness.selection.differential = female.insecticide.fitness.selection.differential)
 
+  #NA becomes zero
+  response.insecticide.fitness = ifelse(is.na(response.insecticide.fitness),
+                                        yes = 0,
+                                        no = response.insecticide.fitness)
+
   return(response.insecticide.fitness)
 }
