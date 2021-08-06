@@ -7,17 +7,17 @@
 #'@param refugia.after.selection = The polygenic resistance score to the insecticide in the refugia after selection.
 
 refugia_after_migration = function(intervention.after.selection,
-                                   joining.from.intervetion,
+                                   joining.from.intervention,
                                    insecticide.population.suppression,
                                    refugia.after.selection,
                                    staying.in.refugia){
 
 
-  numerator = (intervention.after.selection*joining.from.intervetion*(1-insecticide.population.suppression)) + (refugia.after.selection * staying.in.refugia)
-  #denominator = (joining.from.intervetion * (1-insecticide.population.suppression))+staying.in.refugia
+  numerator = (intervention.after.selection*joining.from.intervention*(1-insecticide.population.suppression)) + (refugia.after.selection * staying.in.refugia)
+  denominator = (joining.from.intervention * (1-insecticide.population.suppression))+staying.in.refugia
 
 
-  refugia.after.migration = numerator#/denominator
+  refugia.after.migration = numerator/denominator
 
   #Prevent NA occurring
   refugia.after.migration = ifelse(is.na(refugia.after.migration),
