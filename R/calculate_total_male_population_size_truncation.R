@@ -5,7 +5,7 @@
 
 calculate_total_male_population_size_truncation = function(total.population.size){
 
-  total.male.population.size = total.population.size/2
+  total.male.population.size = total.population.size/2 #50:50 male female ratio at emergence
 
 
   return(total.male.population.size)
