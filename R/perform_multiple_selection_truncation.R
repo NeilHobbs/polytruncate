@@ -53,8 +53,8 @@ perform_multiple_selection_truncation = function(trait.mean,
       relative.frequency.encounter[[gonotrophic]] = female.exposure * relative.trait.frequency
     }
     if(gonotrophic != 1){
-    relative.frequency.do.not.encounter[[gonotrophic]] = (1 - female.exposure)*update.end.relative.frequency[[gonotrophic-1]]
-    relative.frequency.encounter[[gonotrophic]] = female.exposure * update.end.relative.frequency[[gonotrophic-1]]
+    relative.frequency.do.not.encounter[[gonotrophic]] = (1 - female.exposure)*c(unlist(update.end.relative.frequency[[gonotrophic-1]]))
+    relative.frequency.encounter[[gonotrophic]] = female.exposure * c(unlist(update.end.relative.frequency[[gonotrophic-1]]))
     }
 
     gonotrophic.survival.rate = ifelse(gonotrophic == 1,
@@ -76,10 +76,11 @@ perform_multiple_selection_truncation = function(trait.mean,
     vector.position[gonotrophic] = which(abs(cumulative.frequency - total.surviving) == min(abs(cumulative.frequency - total.surviving)))
 
     relative.frequency.surviving.encounter = relative.frequency.encounter
-    #those below the threshold all die.
-    post.encounter[0:(vector.length-vector.position[gonotrophic])] = 0
 
-    update.end.relative.frequency[[gonotrophic]] = post.encounter + c(relative.frequency.do.not.encounter[[gonotrophic]])
+    #those below the threshold all die.
+    relative.frequency.surviving.encounter[0:(vector.length-vector.position[gonotrophic])] = 0
+
+    update.end.relative.frequency[[gonotrophic]] = relative.frequency.surviving.encounter + c(unlist(relative.frequency.do.not.encounter[[gonotrophic]]))
 
     total.females.surviving[[gonotrophic]] = sum(c(update.end.relative.frequency[[gonotrophic]]))
 
@@ -99,49 +100,49 @@ perform_multiple_selection_truncation = function(trait.mean,
 
 }
 
-A = perform_multiple_selection_truncation(trait.mean = 0,
-                                      standard.deviation = 30,
-                                      vector.length = 10000,
-                                      n.cycles = 5,
-                                      female.exposure = 0.5,
-                                      male.selection.differential = 0,
-                                      heritability = 0.3,
-                                      exposure.scaling.factor = 1,
-                                      maximum.bioassay.survival.proportion = 1,
-                                      half.population.bioassay.survival.resistance = 900,
-                                      michaelis.menten.slope = 1,
-                                      regression.coefficient = 0.48,
-                                      regression.intercept = 0.15,
-                                      current.insecticide.efficacy = 1)
-
-library(ggplot2)
-gonotrophic.1 = A[[3]][[1]]
-gonotrophic.2 = A[[3]][[2]]
-gonotrophic.3 = A[[3]][[3]]
-gonotrophic.4 = A[[3]][[4]]
-gonotrophic.5 = A[[3]][[5]]
-norm.dist = A[[4]]
-
-df = data.frame(gonotrophic.1, gonotrophic.2, gonotrophic.3,
-                gonotrophic.4, gonotrophic.5, norm.dist)
-
-
-ggplot(df, aes(x=norm.dist, y=gonotrophic.1))+
-  geom_line(colour = "red", size = 2,
-            alpha = 0.7)+
-  geom_line(aes(x=norm.dist, y=gonotrophic.2),
-            colour = "green", size = 2,
-            alpha = 0.7)+
-  geom_line(aes(x=norm.dist, y=gonotrophic.3),
-            colour = "blue", size = 2,
-            alpha = 0.7)+
-  geom_line(aes(x=norm.dist, y=gonotrophic.4),
-            colour = "orange", size = 2,
-            alpha = 0.7)+
-  geom_line(aes(x=norm.dist, y=gonotrophic.5),
-            colour = "yellow", size = 2,
-            alpha = 0.7)+
-  xlab("PRS Value")+
-  ylab("Relative Frequency")+
-  theme_classic()
+# A = perform_multiple_selection_truncation(trait.mean = 0,
+#                                       standard.deviation = 30,
+#                                       vector.length = 10000,
+#                                       n.cycles = 5,
+#                                       female.exposure = 0.5,
+#                                       male.selection.differential = 0,
+#                                       heritability = 0.3,
+#                                       exposure.scaling.factor = 1,
+#                                       maximum.bioassay.survival.proportion = 1,
+#                                       half.population.bioassay.survival.resistance = 900,
+#                                       michaelis.menten.slope = 1,
+#                                       regression.coefficient = 0.48,
+#                                       regression.intercept = 0.15,
+#                                       current.insecticide.efficacy = 1)
+#
+# library(ggplot2)
+# gonotrophic.1 = A[[3]][[1]]
+# gonotrophic.2 = A[[3]][[2]]
+# gonotrophic.3 = A[[3]][[3]]
+# gonotrophic.4 = A[[3]][[4]]
+# gonotrophic.5 = A[[3]][[5]]
+# norm.dist = A[[4]]
+#
+# df = data.frame(gonotrophic.1, gonotrophic.2, gonotrophic.3,
+#                 gonotrophic.4, gonotrophic.5, norm.dist)
+#
+#
+# ggplot(df, aes(x=norm.dist, y=gonotrophic.1))+
+#   geom_line(colour = "red", size = 2,
+#             alpha = 0.7)+
+#   geom_line(aes(x=norm.dist, y=gonotrophic.2),
+#             colour = "green", size = 2,
+#             alpha = 0.7)+
+#   geom_line(aes(x=norm.dist, y=gonotrophic.3),
+#             colour = "blue", size = 2,
+#             alpha = 0.7)+
+#   geom_line(aes(x=norm.dist, y=gonotrophic.4),
+#             colour = "orange", size = 2,
+#             alpha = 0.7)+
+#   geom_line(aes(x=norm.dist, y=gonotrophic.5),
+#             colour = "yellow", size = 2,
+#             alpha = 0.7)+
+#   xlab("PRS Value")+
+#   ylab("Relative Frequency")+
+#   theme_classic()
 

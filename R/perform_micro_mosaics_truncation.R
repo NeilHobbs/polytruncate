@@ -23,7 +23,8 @@ perform_micro_mosaics_truncation = function(trait.mean.1,
                                             regression.coefficient,
                                             regression.intercept,
                                             current.insecticide.efficacy.1,
-                                            current.insecticide.efficacy.2){
+                                            current.insecticide.efficacy.2,
+                                            cross.selection){
 
   normal.distribution.values.1 = create_normal_distribution(vector.length = vector.length,
                                                             trait.mean = trait.mean.1,
@@ -209,7 +210,12 @@ perform_micro_mosaics_truncation = function(trait.mean.1,
   total.oviposition.2 = sum(pop.size.values.2)
   overall.response.2 = sum(response.values.2*(pop.size.values.2/total.oviposition.2))
 
-  df.1 = data.frame(overall.response.1, overall.response.2)
+  #allow for cross selection:
+  overall.response.1.cs = overall.response.1 + (cross.selection * overall.response.2)
+  overall.response.2.cs = overall.response.2 + (cross.selection * overall.response.1)
+
+
+  df.1 = data.frame(overall.response.1.cs, overall.response.2.cs)
   df.2 = data.frame(new.mean.1, response.values.1, pop.size.values.1,
                     new.mean.2, response.values.2, pop.size.values.2)
 
