@@ -10,7 +10,7 @@ breeders_equation_male_female_insecticide_fitness = function(heritability,
                                                              female.insecticide.fitness.selection.differential){
 
 
-  if(0 > heritability |heritability > 1){stop("heritability must be between 0 and 1")}
+ # if(0 > heritability |heritability > 1){stop("heritability must be between 0 and 1")}
 
   response.insecticide.fitness = ((heritability / 2)*female.insecticide.fitness.selection.differential)+
                                  ((heritability / 2)*male.insecticide.fitness.selection.differential)
