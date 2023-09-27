@@ -82,13 +82,15 @@ run_simulation_truncation = function(number.of.insecticides = 2,
                                                                         maximum.resistance.value = maximum.resistance.value)
 
   #Make a dataframe of the insecticide parameters:
-  insecticide.parameters.df = create_insecticide_parameters_dataframe(number.of.insecticides = number.of.insecticides,
+  insecticide.parameters.df = create_insecticide_parameters_dataframe_advanced(number.of.insecticides = number.of.insecticides,
                                                                       applied.insecticide.dose = applied.insecticide.dose,
                                                                       recommended.insecticide.dose = recommended.insecticide.dose,
                                                                       threshold.generation = threshold.generations,
                                                                       base.efficacy.decay.rate = base.efficacy.decay.rate,
                                                                       rapid.decay.rate = rapid.decay.rate,
-                                                                      heritability = heritability)
+                                                                      heritability = heritability,
+                                                                      female.fitness.cost = female.fitness.cost,
+                                                                      male.fitness.cost = male.fitness.cost)
 
 
   #define if insecticides are deployed as mixtures or as singles.
@@ -189,8 +191,8 @@ if(sd.scaled == FALSE){
                                                                                                                                                             sim.array = sim.array,
                                                                                                                                                             population.suppression = population.suppression),
                                                                                intervention.before.selection = sim.array['intervention', insecticide, generation-1],
-                                                                               female.fitness.cost = female.fitness.cost,
-                                                                               male.fitness.cost = male.fitness.cost,
+                                                                               female.fitness.cost = insecticide.parameters.df$female.fitness.cost[insecticide],
+                                                                               male.fitness.cost = insecticide.parameters.df$male.fitness.cost[insecticide],
                                                                                female.insecticide.exposure = female.insecticide.exposure,
                                                                                male.insecticide.exposure = male.insecticide.exposure,
                                                                                standard.deviation = standard.deviation,
@@ -202,7 +204,7 @@ if(sd.scaled == FALSE){
                                                                                regression.intercept = regression.intercept,
                                                                                current.insecticide.efficacy = insecticide.efficacy.vector[generation],
                                                                                exposure.scaling.factor = exposure.scaling.factor,
-                                                                               heritability = heritability,
+                                                                               heritability = insecticide.parameters.df$heritability[insecticide],
                                                                                refugia.before.selection = sim.array['refugia', insecticide, generation-1],
                                                                                dispersal.rate = dispersal.rate,
                                                                                intervention.coverage = intervention.coverage)
@@ -228,9 +230,9 @@ if(sd.scaled == FALSE){
                                                                                                                                                                 sim.array = sim.array,
                                                                                                                                                                 population.suppression = population.suppression),
                                                                                    intervention.before.selection = sim.array['intervention', insecticide, generation-1],
-                                                                                   female.fitness.cost = female.fitness.cost,
-                                                                                   male.fitness.cost = male.fitness.cost,
-                                                                                   heritability = heritability,
+                                                                                   female.fitness.cost = insecticide.parameters.df$female.fitness.cost[insecticide],
+                                                                                   male.fitness.cost = insecticide.parameters.df$male.fitness.cost[insecticide],
+                                                                                   heritability = insecticide.parameters.df$heritability[insecticide],
                                                                                    refugia.before.selection = sim.array['refugia', insecticide, generation-1],
                                                                                    dispersal.rate = dispersal.rate,
                                                                                    intervention.coverage = intervention.coverage,
@@ -286,6 +288,18 @@ if(sd.scaled == FALSE){
                     deployment.frequency = deployment.frequency,
                     deployment.vector = deployed.insecticide)
 
+                }else{
+                  if(irm.strategy == "adaptive.rotations"){irm_strategy_adaptive_rotations(
+                    number.of.insecticides = number.of.insecticides,
+                    current.generation = generation,
+                    withdrawal.threshold = calc.withdrawal.threshold,
+                    return.threshold = calc.return.threshold,
+                    simulation.array = sim.array,
+                    available.vector = available.vector,
+                    withdrawn.vector = withdrawn.vector,
+                    current.insecticide = deployed.insecticide[generation],
+                    deployment.frequency = deployment.frequency,
+                    deployment.vector = deployed.insecticide)}
                 }
               }
 
@@ -338,8 +352,8 @@ if(sd.scaled == FALSE){
                                                                                                                                                                                  population.suppression = population.suppression,
                                                                                                                                                                                  deployed.mixture = deployed.mixture),
                                                                                            intervention.before.selection = sim.array['intervention', insecticide, generation-1],
-                                                                                           female.fitness.cost = female.fitness.cost,
-                                                                                           male.fitness.cost = male.fitness.cost,
+                                                                                           female.fitness.cost = insecticide.parameters.df$female.fitness.cost[insecticide],
+                                                                                           male.fitness.cost = insecticide.parameters.df$male.fitness.cost[insecticide],
                                                                                            female.insecticide.exposure = female.insecticide.exposure,
                                                                                            male.insecticide.exposure = male.insecticide.exposure,
                                                                                            standard.deviation = standard.deviation,
@@ -361,7 +375,9 @@ if(sd.scaled == FALSE){
                                                                                            other.mixture.part = get_other_part_of_mixture(deployed.mixture = deployed.mixture,
                                                                                                                                           generation = generation,
                                                                                                                                           insecticide = insecticide,
-                                                                                                                                          sim.array = sim.array))
+                                                                                                                                          sim.array = sim.array),
+                                                                                           insecticide.parameters.df = insecticide.parameters.df,
+                                                                                           cross.selection.matrix = cross.selection.matrix)
 
             sim.array['intervention', insecticide, generation] = tracked.resistance[[1]]
             sim.array['refugia', insecticide, generation] = tracked.resistance[[2]]
@@ -638,7 +654,9 @@ if(sd.scaled == FALSE){
                                                                                                         other.mixture.part = get_other_part_of_mixture(deployed.mixture = deployed.mixture,
                                                                                                                                                        generation = generation,
                                                                                                                                                        insecticide = insecticide,
-                                                                                                                                                       sim.array = sim.array))
+                                                                                                                                                       sim.array = sim.array),
+                                                                                                        insecticide.parameters.df = insecticide.parameters.df,
+                                                                                                        cross.selection.matrix = cross.selection.matrix)
 
               sim.array['intervention', insecticide, generation] = tracked.resistance[[1]]
               sim.array['refugia', insecticide, generation] = tracked.resistance[[2]]

@@ -43,7 +43,9 @@ wrapper_intervention_refugia_deployed_dispersal_mixtures_truncation = function(i
                                                                     intervention.coverage,
                                                                     other.mixture.part,
                                                                     sim.array,
-                                                                    current.generation){
+                                                                    current.generation,
+                                                                    insecticide.parameters.df,
+                                                                    cross.selection.matrix){
 
 
   survival.to.other.mixture = convert_bioassay_survival_to_field_survival(bioassay.survival = convert_resistance_score_to_bioassay_survival(maximum.bioassay.survival.proportion = maximum.bioassay.survival.proportion,
@@ -82,6 +84,39 @@ wrapper_intervention_refugia_deployed_dispersal_mixtures_truncation = function(i
                                                                                                         survival.to.other.insecticide = survival.to.other.mixture)
 
 
+  response.other.insecticide =  wrapper_breeders_equation_insecticide_fitness_truncation_mixtures(trait.mean = sim.array['intervention', other.mixture.part, current.generation-1],
+                                                                                                  female.fitness.cost = insecticide.parameters.df$female.fitness.cost[other.mixture.part],
+                                                                                                  male.fitness.cost= insecticide.parameters.df$male.fitness.cost[other.mixture.part],
+                                                                                                  female.insecticide.exposure = female.insecticide.exposure,
+                                                                                                  male.insecticide.exposure = male.insecticide.exposure,
+                                                                                                  standard.deviation = standard.deviation,
+                                                                                                  vector.length = vector.length,
+                                                                                                  maximum.bioassay.survival.proportion = maximum.bioassay.survival.proportion,
+                                                                                                  michaelis.menten.slope = michaelis.menten.slope,
+                                                                                                  half.population.bioassay.survival.resistance = half.population.bioassay.survival.resistance,
+                                                                                                  regression.coefficient = regression.coefficient,
+                                                                                                  regression.intercept = regression.intercept,
+                                                                                                  current.insecticide.efficacy = ifelse(other.mixture.part < currently.tracked.insecticide,
+                                                                                                                                        yes = deployed.mixture$insecticide.efficacy.vector.part.1[current.generation],
+                                                                                                                                        no = deployed.mixture$insecticide.efficacy.vector.part.2[current.generation]),
+                                                                                                  exposure.scaling.factor = exposure.scaling.factor,
+                                                                                                  heritability = insecticide.parameters.df$heritability[other.mixture.part],
+                                                                                                  survival.to.other.insecticide = convert_bioassay_survival_to_field_survival(bioassay.survival = convert_resistance_score_to_bioassay_survival(maximum.bioassay.survival.proportion = maximum.bioassay.survival.proportion,
+                                                                                                                                                                                                                                                trait.mean = sim.array["intervention", currently.tracked.insecticide, current.generation-1],
+                                                                                                                                                                                                                                                michaelis.menten.slope = michaelis.menten.slope,
+                                                                                                                                                                                                                                                half.population.bioassay.survival.resistance = half.population.bioassay.survival.resistance),
+                                                                                                                                                                              regression.coefficient = regression.coefficient,
+                                                                                                                                                                              regression.intercept = regression.intercept,
+                                                                                                                                                                              current.insecticide.efficacy = ifelse(currently.tracked.insecticide < other.mixture.part,
+                                                                                                                                                                                                                    yes = deployed.mixture$insecticide.efficacy.vector.part.1[current.generation],
+                                                                                                                                                                                                                    no = deployed.mixture$insecticide.efficacy.vector.part.2[current.generation])))
+
+
+  #do correlated reponses::
+  cross.selection.value = cross.selection.matrix[currently.tracked.insecticide, other.mixture.part]
+
+  intervention.after.selection = intervention.after.selection + (cross.selection.value * response.other.insecticide)
+
   refugia.after.selection = wrapper_refugia_breeders_equation(refugia.before.selection = refugia.before.selection,
                                                               heritability = heritability,
                                                               female.fitness.cost = female.fitness.cost,
@@ -91,7 +126,7 @@ wrapper_intervention_refugia_deployed_dispersal_mixtures_truncation = function(i
                                                                       intervention.coverage = intervention.coverage)
 
   joining.from.intervention = number_migrating_intervention_to_refugia(dispersal.rate = dispersal.rate,
-                                                                      intervention.coverage = intervention.coverage)
+                                                                       intervention.coverage = intervention.coverage)
 
   joining.from.refugia =  number_migrating_refugia_to_intervention(dispersal.rate = dispersal.rate,
                                                                    intervention.coverage = intervention.coverage)
