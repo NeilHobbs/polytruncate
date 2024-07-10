@@ -59,7 +59,7 @@ before.selection = ggplot(df, aes(x=trait.values,
                                   y=values.frequency))+
   geom_area(fill = "#addd8e")+
   geom_vline(xintercept = 0,
-             linetype = "dashed",
+             linetype = "dashed", linewidth = 2,
              colour = "black")+
   ylim(0, 0.02)+
   ggtitle("Initial Population")+
@@ -72,7 +72,7 @@ unexposed.plot = ggplot(df, aes(x=trait.values,
                                 y=unexposed.individuals))+
   geom_area(fill = "#6baed6")+
   geom_vline(xintercept = 0,
-             linetype = "dashed",
+             linetype = "dashed", linewidth = 2,
              colour = "black")+
   ylim(0, 0.02)+
   ggtitle("Avoids Insecticides")+
@@ -89,7 +89,7 @@ low.efficacy.plot = ggplot(df, aes(x=trait.values,
   geom_area(fill = "#807dba")+
   geom_vline(xintercept = 0,
              colour = "black",
-             linetype = "dashed")+
+             linetype = "dashed", linewidth = 2)+
   ggtitle("Low Dose Insecticide")+
   ylim(0, 0.02)+
   theme_classic()+
@@ -105,10 +105,10 @@ low.efficacy.end.plot = ggplot(df, aes(x=trait.values,
                   fill = "#6baed6")+
     ylim(0, 0.02)+
   geom_vline(xintercept = 0,
-             linetype = "dashed")+
+             linetype = "dashed", linewidth = 2)+
   geom_vline(xintercept = (sum(trait.values * end.survivors.low.efficacy)/sum(end.survivors.low.efficacy)),
              colour = "#ce1256",
-             linetype = "dashed")+
+             linetype = "dashed", linewidth = 2)+
   ggtitle("Parental Population")+
   theme_classic()+
   theme(axis.text=element_blank(),
@@ -122,7 +122,7 @@ med.efficacy.plot = ggplot(df, aes(x=trait.values,
   geom_area(fill = "#807dba")+
   geom_vline(xintercept = 0,
              colour = "black",
-             linetype = "dashed")+
+             linetype = "dashed", linewidth = 2)+
   ggtitle("Moderate Dose Insecticide")+
   ylim(0, 0.02)+
   theme_classic()+
@@ -137,10 +137,10 @@ med.efficacy.end.plot = ggplot(df, aes(x=trait.values,
             fill = "#6baed6")+
   ylim(0, 0.02)+
   geom_vline(xintercept = 0,
-             linetype = "dashed")+
+             linetype = "dashed", linewidth = 2)+
   geom_vline(xintercept = (sum(trait.values * end.survivors.med.efficacy)/sum(end.survivors.med.efficacy)),
              colour = "#ce1256",
-             linetype = "dashed")+
+             linetype = "dashed", linewidth = 2)+
   theme_classic()+
   theme(axis.text=element_blank(),
         axis.ticks=element_blank(),
@@ -153,7 +153,7 @@ vhigh.efficacy.plot = ggplot(df, aes(x=trait.values,
   geom_area(fill = "#807dba")+
   geom_vline(xintercept = 0,
              colour = "black",
-             linetype = "dashed")+
+             linetype = "dashed", linewidth = 2)+
   ggtitle("High Dose Insecticide")+
   ylim(0, 0.02)+
   theme_classic()+
@@ -170,14 +170,33 @@ vhigh.efficacy.end.plot = ggplot(df, aes(x=trait.values,
   ylim(0, 0.02)+
   geom_vline(xintercept = 0,
              colour = "black",
-             linetype = "dashed")+
+             linetype = "dashed", linewidth = 2)+
   geom_vline(xintercept = (sum(trait.values * end.survivors.vhigh.efficacy)/sum(end.survivors.vhigh.efficacy)),
              colour = "#ce1256",
-             linetype = "dashed")+
+             linetype = "dashed", linewidth = 2)+
   theme_classic()+
   theme(axis.text=element_blank(),
         axis.ticks=element_blank(),
         axis.title = element_blank())
+
+
+
+legend.df = data.frame(outcome = c("Avoids Insecticide",
+                                   "Killed by Insecticide",
+                                   "Survives Insecticide"),
+                       yvals = 1:3)
+
+
+legend.df = ggplot(legend.df, aes(x= 1, y = yvals, fill = outcome))+
+  geom_tile()+
+  geom_text(aes(label = outcome), size = 12)+
+  scale_fill_manual(values = c("#6baed6", "#fb6a4a", "#807dba"))+
+  scale_y_continuous(expand = c(0, 0))+
+  scale_x_continuous(expand = c(0, 0))+
+  theme(legend.position = "none",
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text = element_blank())
 
 
 #Add in the  mixtures:
@@ -193,9 +212,9 @@ vhigh.efficacy.end.plot = ggplot(df, aes(x=trait.values,
 
 the.layout = "
 #B#
-#CD
-AEF
-#GH
+ACD
+#EF
+GHI
 "
 
 
@@ -205,6 +224,7 @@ final.plot = before.selection +
   low.efficacy.end.plot +
   med.efficacy.plot +
   med.efficacy.end.plot +
+  legend.df +
   vhigh.efficacy.plot +
   vhigh.efficacy.end.plot +
   plot_layout(design = the.layout)

@@ -457,7 +457,6 @@ ggsave(
 
 
 
-
 plot_mixture_efficacy_resistance_space_novel_j= function(f.exposure){
 
   temp.df =  subset(the.df, female.exposure == f.exposure &
