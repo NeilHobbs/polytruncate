@@ -138,7 +138,7 @@ plot.irm = ggplot(the.df.i, aes(x=efficacy.i,
                      breaks = seq(0, 2.25, 0.25),
                      limits = c(0, 2.25))+
   xlab("Insecticide Efficacy")+
-  ylab(paste0("Single Generation Change\nin Bioassay Survival (%)"))+
+  ylab(paste0("Absolute Single Generation Increase\nin Bioassay Survival (%)"))+
   facet_grid( ~ start.bioassay.i)+
   theme_bw()+
   theme(legend.position = "bottom",
@@ -201,7 +201,7 @@ plot.control = ggplot(the.df.i, aes(x=efficacy.i,
         strip.background = element_rect(fill = "white"))
 
 
-
+plot.control
 
 ggsave(filename = "monotherapy_insecticide_decay_control.jpeg",
        plot = last_plot(),
@@ -327,7 +327,7 @@ plot_mixture_efficacy_resistance_space= function(f.exposure){
                                                           mid = "skyblue",
                                                           high = "red",
                                                           midpoint = subset(the.df, female.exposure == f.exposure)$calc.midpoint[1],
-                                                          name = "Response as\nBioassay\nSurvival (%)")+
+                                                          name = "Absolute Single\nGeneration Increase in\nBioassay Survival (%)")+
                                      scale_x_continuous(sec.axis = sec_axis(~ . , name = "Initial Bioassay Surival (%) Insecticide i",
                                                                             breaks = NULL,
                                                                             labels = NULL),
@@ -361,19 +361,30 @@ AAAABBBBCCCC
 
 }
 
-exposure = seq(0.1, 1, 0.1)
-for(i in 1:10){
+plot_mixture_efficacy_resistance_space(0.6)
 
-  ggsave(plot = plot_mixture_efficacy_resistance_space(exposure[i]),
-       filename = paste0("Mixture_efficacy_space_response",exposure[i],".jpeg"),
+ggsave(plot = last_plot(),
+       filename = paste0("Mixture_efficacy_space_response.0.6.jpeg"),
        dpi = 600,
        height = 800,
        width = 1800,
        scale = 5,
        units = "px")
 
-  print(i)
-}
+
+# exposure = seq(0.1, 1, 0.1)
+# for(i in 1:10){
+#
+#   ggsave(plot = plot_mixture_efficacy_resistance_space(exposure[i]),
+#        filename = paste0("Mixture_efficacy_space_response",exposure[i],".jpeg"),
+#        dpi = 600,
+#        height = 800,
+#        width = 1800,
+#        scale = 5,
+#        units = "px")
+#
+#   print(i)
+# }
 
 
 plot_mixture_efficacy_resistance_space= function(i){
@@ -435,7 +446,7 @@ the.legend = cowplot::get_legend(ggplot(subset(the.df, female.exposure == f.expo
                                                         high = "red",
                                                         midpoint = 1,
                                                         limits = c(0, max(the.df$total.change)),
-                                                           name = "Response as\nBioassay\nSurvival (%)")+
+                                                           name = "Absolute Single\nGeneration Increase in\nBioassay Survival (%)")+
                                    scale_x_continuous(sec.axis = sec_axis(~ . , name = "Initial Bioassay Surival (%) Insecticide i",
                                                                           breaks = NULL,
                                                                           labels = NULL),
@@ -483,7 +494,6 @@ ggsave(plot = plot.list[[1]] +
        width = 2400,
        scale = 5,
        units = "px")
-
 
 
 plot_mixture_efficacy_resistance_space_novel_j= function(f.exposure){
@@ -751,88 +761,6 @@ ggsave(plot = last_plot(),
        width = 2400,
        scale = 5,
        units = "px")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

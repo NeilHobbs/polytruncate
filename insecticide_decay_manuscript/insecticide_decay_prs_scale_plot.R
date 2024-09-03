@@ -47,7 +47,7 @@ the.df = data.frame(PRS, bioassay.survival,
                     field.survival0.5,
                     field.survival0.1)
 
-ggplot(the.df, aes(x=PRS, y = bioassay.survival))+
+p1.a = ggplot(the.df, aes(x=PRS, y = bioassay.survival))+
 
   scale_x_continuous(expand = c(0,0),
                      limits = c(0, 3650),
@@ -88,12 +88,40 @@ ggplot(the.df, aes(x=PRS, y = bioassay.survival))+
         axis.title = element_text(size = 18, colour = "black"))
 
 
+p1.b = ggplot(the.df, aes(x=bioassay.survival * 100,
+                   y = field.survival0.1))+
+  geom_line(aes(y = field.survival1.2* 100), linewidth = 2, colour = "#225ea8")+
+  geom_line(aes(y = field.survival1.0* 100), linewidth = 2, colour = "#1d91c0")+
+  geom_line(aes(y = field.survival0.8* 100), linewidth = 2, colour = "#41b6c4")+
+  geom_line(aes(y = field.survival0.5* 100), linewidth = 2, colour = "#7fcdbb")+
+  geom_line(aes(y = field.survival0.1* 100), linewidth = 2, colour = "#c7e9b4")+
+  xlab(paste("Measured Bioassay Survival (%)\nof the Population"))+
+  ylab("Expected Survival\nin the Field (%)")+
+  scale_x_continuous(expand = c(0,0),
+                     limits = c(0, 80),
+                     breaks = seq(0, 100, 20))+
+  scale_y_continuous(expand = c(0,0),
+                     limits = c(0, 100),
+                     breaks = c(0, 0.1, 0.2, 0.5, 0.8, 1)*100)+
+  theme_bw()+
+  theme(axis.text.x = element_text(size = 12, colour = "black"),
+        axis.text.y = element_text(size = 14, colour = "black"),
+        axis.title = element_text(size = 18, colour = "black"))
+
+
+
+p1.a + p1.b
+
+
+
+
+
 
 ggsave(plot = last_plot(),
        filename = "insecticide_decay_prs_scale.jpeg",
        dpi = 300,
        height = 600,
-       width = 600,
+       width = 1200,
        scale = 5,
        units = "px")
 
