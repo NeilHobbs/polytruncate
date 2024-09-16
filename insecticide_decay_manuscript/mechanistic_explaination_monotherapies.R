@@ -59,7 +59,7 @@ before.selection = ggplot(df, aes(x=trait.values,
                                   y=values.frequency))+
   geom_area(fill = "#addd8e")+
   geom_vline(xintercept = 0,
-             linetype = "dashed", linewidth = 2,
+             linetype = "dashed", linewidth = 1,
              colour = "black")+
   ylim(0, 0.02)+
   ggtitle("Initial Population")+
@@ -72,7 +72,7 @@ unexposed.plot = ggplot(df, aes(x=trait.values,
                                 y=unexposed.individuals))+
   geom_area(fill = "#6baed6")+
   geom_vline(xintercept = 0,
-             linetype = "dashed", linewidth = 2,
+             linetype = "dashed", linewidth = 1,
              colour = "black")+
   ylim(0, 0.02)+
   ggtitle("Avoids Insecticides")+
@@ -89,7 +89,7 @@ low.efficacy.plot = ggplot(df, aes(x=trait.values,
   geom_area(fill = "#807dba")+
   geom_vline(xintercept = 0,
              colour = "black",
-             linetype = "dashed", linewidth = 2)+
+             linetype = "dashed", linewidth = 1)+
   ggtitle("Low Dose Insecticide")+
   ylim(0, 0.02)+
   theme_classic()+
@@ -105,10 +105,10 @@ low.efficacy.end.plot = ggplot(df, aes(x=trait.values,
                   fill = "#6baed6")+
     ylim(0, 0.02)+
   geom_vline(xintercept = 0,
-             linetype = "dashed", linewidth = 2)+
+             linetype = "dashed", linewidth = 1)+
   geom_vline(xintercept = (sum(trait.values * end.survivors.low.efficacy)/sum(end.survivors.low.efficacy)),
              colour = "#ce1256",
-             linetype = "dashed", linewidth = 2)+
+             linetype = "dashed", linewidth = 1)+
   ggtitle("Parental Population")+
   theme_classic()+
   theme(axis.text=element_blank(),
@@ -122,7 +122,7 @@ med.efficacy.plot = ggplot(df, aes(x=trait.values,
   geom_area(fill = "#807dba")+
   geom_vline(xintercept = 0,
              colour = "black",
-             linetype = "dashed", linewidth = 2)+
+             linetype = "dashed", linewidth = 1)+
   ggtitle("Moderate Dose Insecticide")+
   ylim(0, 0.02)+
   theme_classic()+
@@ -137,10 +137,10 @@ med.efficacy.end.plot = ggplot(df, aes(x=trait.values,
             fill = "#6baed6")+
   ylim(0, 0.02)+
   geom_vline(xintercept = 0,
-             linetype = "dashed", linewidth = 2)+
+             linetype = "dashed", linewidth = 1)+
   geom_vline(xintercept = (sum(trait.values * end.survivors.med.efficacy)/sum(end.survivors.med.efficacy)),
              colour = "#ce1256",
-             linetype = "dashed", linewidth = 2)+
+             linetype = "dashed", linewidth = 1)+
   theme_classic()+
   theme(axis.text=element_blank(),
         axis.ticks=element_blank(),
@@ -153,7 +153,7 @@ vhigh.efficacy.plot = ggplot(df, aes(x=trait.values,
   geom_area(fill = "#807dba")+
   geom_vline(xintercept = 0,
              colour = "black",
-             linetype = "dashed", linewidth = 2)+
+             linetype = "dashed", linewidth = 1)+
   ggtitle("High Dose Insecticide")+
   ylim(0, 0.02)+
   theme_classic()+
@@ -170,10 +170,10 @@ vhigh.efficacy.end.plot = ggplot(df, aes(x=trait.values,
   ylim(0, 0.02)+
   geom_vline(xintercept = 0,
              colour = "black",
-             linetype = "dashed", linewidth = 2)+
+             linetype = "dashed", linewidth = 1)+
   geom_vline(xintercept = (sum(trait.values * end.survivors.vhigh.efficacy)/sum(end.survivors.vhigh.efficacy)),
              colour = "#ce1256",
-             linetype = "dashed", linewidth = 2)+
+             linetype = "dashed", linewidth = 1)+
   theme_classic()+
   theme(axis.text=element_blank(),
         axis.ticks=element_blank(),
@@ -189,7 +189,7 @@ legend.df = data.frame(outcome = c("Avoids Insecticide",
 
 legend.df = ggplot(legend.df, aes(x= 1, y = yvals, fill = outcome))+
   geom_tile()+
-  geom_text(aes(label = outcome), size = 12)+
+  geom_text(aes(label = outcome), size = 8)+
   scale_fill_manual(values = c("#6baed6", "#fb6a4a", "#807dba"))+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_continuous(expand = c(0, 0))+
@@ -234,6 +234,14 @@ return(final.plot)
 
 
 mechanistic_explaination_monotherapies()
+
+ggsave(plot = mechanistic_explaination_monotherapies(),
+       filename = "mechanistic_explaination_monotherapies.jpeg",
+       height = 1200,
+       width = 1800,
+       dpi = 600,
+       units = "px",
+       scale = 5)
 
 
 

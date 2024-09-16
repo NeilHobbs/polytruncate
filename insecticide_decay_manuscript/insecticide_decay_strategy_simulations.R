@@ -501,15 +501,41 @@ end.plot = decay.plot + no.decay.plot + the.legend + plot_layout(design = the.la
 return(end.plot)
 }
 
-impact_decay_plot(scenario.1,
+scenario.1.plot = impact_decay_plot(scenario.1,
                   scenario.1.no.decay,
                   graph.title = "Scenario 1: The Impact of Insecticide Decay")
 
-impact_decay_plot(scenario.2,
+scenario.2.plot = impact_decay_plot(scenario.2,
                   scenario.2.no.decay,
                   graph.title = "Scenario 2: Mismatched Initial Resistance")
 
-impact_decay_plot(scenario.3,
+scenario.3.plot = impact_decay_plot(scenario.3,
                   scenario.3.no.decay,
                   graph.title = "Scenario 3: Mismatched Heritability")
 
+
+
+ggsave(plot = scenario.1.plot,
+       filename = "impact_decay_scenario1.jpeg",
+       dpi = 600,
+       scale = 5,
+       height = 800,
+       width = 1200,
+       units = "px")
+
+
+ggsave(plot = scenario.2.plot,
+       filename = "impact_decay_scenario2.jpeg",
+       dpi = 600,
+       scale = 5,
+       height = 800,
+       width = 1200,
+       units = "px")
+
+ggsave(plot = scenario.3.plot,
+       filename = "impact_decay_scenario3.jpeg",
+       dpi = 600,
+       scale = 5,
+       height = 800,
+       width = 1200,
+       units = "px")

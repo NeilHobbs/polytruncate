@@ -213,6 +213,13 @@ decay.plot.3 = ggplot(decay.df, aes(x=generations, y = decay.1))+
 decay.plot.1 + decay.plot.2 + decay.plot.3
 
 
+ggsave(plot = last_plot(),
+       filename = "insecicide_decay_profiles.jpeg",
+       dpi = 300,
+       scale = 5,
+       units = "px",
+       width = 700,
+       height = 300)
 
 
 
